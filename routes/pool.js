@@ -8,17 +8,17 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306,
 
   ssl: {
-    rejectUnauthorized: true,
+    rejectUnauthorized: false, // ✅ REQUIRED for Aiven
   },
 
   waitForConnections: true,
-  connectionLimit: 20,
+  connectionLimit: 10,
   queueLimit: 0
 });
 
 pool.getConnection((err, conn) => {
   if (err) {
-    console.error("❌ DB CONNECTION FAILED:", err);
+    console.error("❌ DB CONNECTION FAILED:", err.message);
   } else {
     console.log("✅ DB CONNECTED SUCCESSFULLY");
     conn.release();
