@@ -1,12 +1,23 @@
 #!/usr/bin/env node
 
 /**
+ * 🔥 LOAD ENV FIRST (VERY IMPORTANT)
+ */
+require('dotenv').config();
+
+/**
  * Module dependencies.
  */
 
 var app = require('../app');
 var debug = require('debug')('jobsspider-backend:server');
 var http = require('http');
+
+/**
+ * 🔎 TEMP DEBUG (remove later)
+ */
+console.log("DB USER =>", process.env.DB_USER);
+console.log("DB HOST =>", process.env.DB_HOST);
 
 /**
  * Get port from environment and store in Express.
@@ -37,12 +48,10 @@ function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
     return val;
   }
 
   if (port >= 0) {
-    // port number
     return port;
   }
 
@@ -62,16 +71,13 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
-      break;
     default:
       throw error;
   }
